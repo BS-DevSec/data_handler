@@ -1,7 +1,0 @@
-pandas
-matplotlib
-seaborn
-PyYAML
-pytest
-pytest-cov
-pytest-mock
