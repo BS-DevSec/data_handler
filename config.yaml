@@ -1,0 +1,24 @@
+data_loader:
+  offline_file: 'data/hk18/offlindata_HK_45.txt'
+  online_file: 'data/hk18/onlindata_HK_453.txt'
+  kla_file: 'data/data(kla)/Daten(klA)400rpm 3L.txt'
+  column_separator: '\t'
+  decimal_separator: ','
+  encoding: 'utf-8'
+
+data_processor:
+  online_numeric_columns:
+    - 'spH'
+    - 'spO2'
+    - 'NStirrer'
+    - 'sTR'
+    - 'sCO2'
+    - 'sO2'
+    - 'FAirIn'
+    - 'sVR'
+    - 'FGlucose'
+
+plotter:
+  figsize_main: [17, 12]
+  figsize_kla: [14, 8]
+  style: 'darkgrid'
