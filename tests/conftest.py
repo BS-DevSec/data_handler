@@ -1,18 +1,43 @@
 # tests/conftest.py
 
 import sys
+import pytest
+import pandas as pd
 from pathlib import Path
 
-# Get the absolute path to the project root directory
-project_root = Path(__file__).resolve().parent.parent
+@pytest.fixture
+def KLA_DATA():
+    data = {
+        'Time': ['2024-01-01 12:00:00', '2024-01-01 13:00:00'],
+        'Measurement1': [1.0, 2.0],
+        'Measurement2': [3.0, 4.0]
+    }
+    return pd.DataFrame(data)
 
-# Path to the src directory
-src_path = project_root / 'src'
+@pytest.fixture
+def KLA_DATA_RAW():
+    raw_data = """Time;Measurement1;Measurement2
+2024-01-01 12:00:00;1,0;3,0
+2024-01-01 13:00:00;2,0;4,0"""
+    return raw_data
 
-# Add src to sys.path if not already present
-if str(src_path) not in sys.path:
-    sys.path.insert(0, str(src_path))
+@pytest.fixture
+def KLA_DATA_PROCESSED():
+    processed_data = pd.DataFrame({
+        'Time': pd.to_datetime(['2024-01-01 12:00:00', '2024-01-01 13:00:00'], format='%Y-%m-%d %H:%M:%S'),
+        'Measurement1': [1.0, 2.0],
+        'Measurement2': [3.0, 4.0]
+    })
+    return processed_data
 
-# Debugging line to verify sys.path modification
-print("DEBUG: Added 'src' to sys.path:", str(src_path) in sys.path)
-print("DEBUG: Current sys.path:", sys.path)
+@pytest.fixture(scope='session', autouse=True)
+def add_src_to_sys_path():
+    """
+    Adds the 'src' directory to sys.path for all tests.
+    """
+    project_root = Path(__file__).resolve().parent.parent
+    src_path = project_root / 'src'
+    if str(src_path) not in sys.path:
+        sys.path.insert(0, str(src_path))
+    # Optional: Uncomment the next line to debug sys.path during testing
+    # print("sys.path:", sys.path)
