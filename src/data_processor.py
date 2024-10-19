@@ -1,3 +1,4 @@
+# data_processor.py
 import logging
 from typing import Optional
 
@@ -5,7 +6,6 @@ import pandas as pd
 
 # Configure logging
 logger = logging.getLogger(__name__)
-
 
 class DataProcessor:
     """Class to process data for plotting and analysis."""

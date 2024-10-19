@@ -1,37 +1,31 @@
+# data_loader.py
 from io import StringIO
-import logging
-from typing import List, Optional, Tuple
-
+from pathlib import Path
 import pandas as pd
+import logging
+from typing import List, Optional, Tuple, Any, Dict
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s',
-    handlers=[
-        logging.StreamHandler()
-    ]
-)
+from config_loader import ConfigLoader
+
 logger = logging.getLogger(__name__)
-
-# Constants
-NA_VALUES = ['#NAN', 'NaN', 'nan', '#DIV/0!', 'inf', '-inf']
-COLUMN_SEPARATOR = '\t'
-DECIMAL_SEPARATOR = ','
-
 
 class DataLoader:
     """Class to handle loading and processing of offline, online, and KLA data."""
 
-    def __init__(self, offline_file: str, online_file: str):
+    def __init__(self, config: ConfigLoader, project_root: Path):
         """
-        Initialize the DataLoader with paths to offline and online data files.
+        Initialize the DataLoader with configuration settings and project root.
 
-        :param offline_file: Path to the offline data file.
-        :param online_file: Path to the online data file.
+        :param config: Instance of ConfigLoader containing configuration parameters.
+        :param project_root: Path object representing the project root directory.
         """
-        self.offline_file = offline_file
-        self.online_file = online_file
+        data_loader_config = config.get('data_loader')
+        self.offline_file = project_root / data_loader_config.get('offline_file')
+        self.online_file = project_root / data_loader_config.get('online_file')
+        self.kla_dir = project_root / data_loader_config.get('kla_dir', 'data/data(kla)/')
+        self.column_separator = data_loader_config.get('column_separator', '\t')
+        self.decimal_separator = data_loader_config.get('decimal_separator', ',')
+        self.encoding = data_loader_config.get('encoding', 'utf-8')
         self.offline_data: Optional[pd.DataFrame] = None
         self.online_data: Optional[pd.DataFrame] = None
 
@@ -40,22 +34,24 @@ class DataLoader:
         Load offline and online data from their respective files into pandas DataFrames.
         """
         try:
-            logger.info(f"Loading offline data from {self.offline_file}")
+            logger.info(f"Loading offline data from {self.offline_file.resolve()}")
             self.offline_data = pd.read_csv(
                 self.offline_file,
-                sep=COLUMN_SEPARATOR,
-                na_values=NA_VALUES,
-                decimal=DECIMAL_SEPARATOR
+                sep=self.column_separator,
+                na_values=['#NAN', 'NaN', 'nan', '#DIV/0!', 'inf', '-inf'],
+                decimal=self.decimal_separator,
+                engine='python'  # Specify engine to avoid ParserWarning
             )
             logger.info("Offline data loaded successfully.")
 
-            logger.info(f"Loading online data from {self.online_file}")
+            logger.info(f"Loading online data from {self.online_file.resolve()}")
             self.online_data = pd.read_csv(
                 self.online_file,
-                sep=COLUMN_SEPARATOR,
-                na_values=NA_VALUES,
-                decimal=DECIMAL_SEPARATOR,
-                encoding="utf-8"
+                sep=self.column_separator,
+                na_values=['#NAN', 'NaN', 'nan', '#DIV/0!', 'inf', '-inf'],
+                decimal=self.decimal_separator,
+                encoding=self.encoding,
+                engine='python'  # Specify engine to avoid ParserWarning
             )
             logger.info("Online data loaded successfully.")
         except FileNotFoundError as e:

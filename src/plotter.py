@@ -1,28 +1,36 @@
+# plotter.py
 import logging
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, Any, Dict
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 import pandas as pd
 
 logger = logging.getLogger(__name__)
 
-
 class Plotter:
     """Class to handle plotting of data."""
 
-    def __init__(self, processor: Optional['DataProcessor'] = None, plot_dir: Optional[Path] = None):
+    def __init__(self, processor: Optional['DataProcessor'] = None, config: Optional[Dict[str, Any]] = None):
         """
-        Initialize the Plotter with a DataProcessor instance and output directory.
+        Initialize the Plotter with a DataProcessor instance and configuration settings.
 
         :param processor: Instance of DataProcessor containing processed data.
-        :param plot_dir: Path to the directory where plots will be saved.
+        :param config: Dictionary containing plot configurations.
         """
         self.processor = processor
-        self.plot_dir = plot_dir or Path('plot')  # Default to 'plot' directory
-        self.plot_dir.mkdir(parents=True, exist_ok=True)  # Create directory if it doesn't exist
+        plotter_config = config or {}
+        self.figsize_main = plotter_config.get('figsize_main', [17, 12])
+        self.figsize_kla = plotter_config.get('figsize_kla', [14, 8])
+        self.style = plotter_config.get('style', 'darkgrid')
+        self.plot_dir = Path(plotter_config.get('plot_dir', 'plot'))
+        self.dpi = plotter_config.get('dpi', 300)
+
+        # Ensure the plot directory exists
+        self.plot_dir.mkdir(parents=True, exist_ok=True)
 
     def set_processor(self, processor: 'DataProcessor') -> None:
         """
@@ -42,10 +50,12 @@ class Plotter:
 
         logger.info("Generating main culture simulation plots.")
         try:
+            sns.set(style=self.style)
+
             fig, (ax1, ax2, ax3, ax4) = plt.subplots(
                 4,
                 gridspec_kw={'height_ratios': [1.5, 1.3, 1.3, 1.3]},
-                figsize=(17, 12)
+                figsize=self.figsize_main
             )
 
             label_font_size = 18
@@ -63,6 +73,9 @@ class Plotter:
             ax1y2.set_ylim([0, 75])
             ax1y2.set_ylabel(r"Ethanol, Biomass / g $\cdot$ L$^{-1}$", fontsize=label_font_size)
             ax1y2.tick_params(axis='y', labelsize=tick_font_size)
+            time_feed_glucose_numeric = np.array(self.processor.time_feed_glucose_numeric)
+            glucose_feed = np.array(self.processor.glucose_feed)
+            valid_feed_glucose_mask = np.array(self.processor.valid_feed_glucose_mask)
 
             ax1.plot(
                 self.processor.time_glucose,
@@ -128,8 +141,8 @@ class Plotter:
                 label="spO2"
             )
             ax3y2.plot(
-                self.processor.time_feed_glucose_numeric[self.processor.valid_feed_glucose_mask],
-                self.processor.glucose_feed[self.processor.valid_feed_glucose_mask],
+                time_feed_glucose_numeric[valid_feed_glucose_mask],
+                glucose_feed[valid_feed_glucose_mask],
                 color="#CD5B45",
                 linestyle="-",
                 linewidth=1,
@@ -197,7 +210,7 @@ class Plotter:
             # Create a timestamp for unique filenames
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             plot_filename = self.plot_dir / f"main_culture_simulation_{timestamp}.png"
-            plt.savefig(plot_filename, dpi=300)
+            plt.savefig(plot_filename, dpi=self.dpi)
             logger.info(f"Main culture simulation plot saved to {plot_filename}")
 
             # Optionally, display the plot
@@ -208,16 +221,17 @@ class Plotter:
             logger.error(f"Error generating main culture simulation plots: {e}")
             raise
 
-    def plot_kla_data(self, df: pd.DataFrame) -> None:
+    def plot_kla_data(self, df: pd.DataFrame, kla_filename: str) -> None:
         """
         Plot KLA data and save the figure to the plot directory.
 
         :param df: DataFrame containing KLA data.
+        :param kla_filename: Name of the KLA data file for descriptive plotting.
         """
-        logger.info("Generating KLA data plots.")
+        logger.info(f"Generating KLA data plots for {kla_filename}.")
         try:
-            sns.set(style="darkgrid")
-            plt.figure(figsize=(14, 8))
+            sns.set(style=self.style)
+            plt.figure(figsize=self.figsize_kla)
 
             plot_columns = ['spO2', 'sO2', 'sCO2', 'NStirrer', 'FAirIn', 'FO2In']
             colors = ['blue', 'green', 'red', 'orange', 'purple', 'brown']
@@ -230,14 +244,23 @@ class Plotter:
 
             plt.xlabel('Time')
             plt.ylabel('Measurements')
-            plt.title('Measurement Data Over Time')
+            plt.title(f'Measurement Data Over Time - {kla_filename}')
             plt.legend()
             plt.tight_layout()
 
+            # Extract parameters from filename for descriptive naming
+            # Assuming filename format: Daten(klA)400rpm 3L.txt
+            parts = kla_filename.replace('.txt', '').split(')')
+            if len(parts) > 1:
+                rpm_volume = parts[1].strip()
+            else:
+                rpm_volume = 'unknown'
+
             # Create a timestamp for unique filenames
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            plot_filename = self.plot_dir / f"kla_data_plot_{timestamp}.png"
-            plt.savefig(plot_filename, dpi=300)
+            # Use the rpm and volume in the plot filename
+            plot_filename = self.plot_dir / f"kla_data_plot_{rpm_volume}_{timestamp}.png"
+            plt.savefig(plot_filename, dpi=self.dpi)
             logger.info(f"KLA data plot saved to {plot_filename}")
 
             # Optionally, display the plot
@@ -245,5 +268,5 @@ class Plotter:
             plt.close()
             logger.info("KLA data plots generated successfully.")
         except Exception as e:
-            logger.error(f"Error generating KLA data plots: {e}")
+            logger.error(f"Error generating KLA data plots for {kla_filename}: {e}")
             raise

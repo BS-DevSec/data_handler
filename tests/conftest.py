@@ -1,4 +1,6 @@
 # tests/conftest.py
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend for all tests
 
 import sys
 import pytest
