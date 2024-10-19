@@ -1,6 +1,7 @@
 import logging
-from datetime import date
+from datetime import datetime, date
 from typing import Optional
+from pathlib import Path
 
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -12,13 +13,16 @@ logger = logging.getLogger(__name__)
 class Plotter:
     """Class to handle plotting of data."""
 
-    def __init__(self, processor: Optional['DataProcessor'] = None):
+    def __init__(self, processor: Optional['DataProcessor'] = None, plot_dir: Optional[Path] = None):
         """
-        Initialize the Plotter with a DataProcessor instance.
+        Initialize the Plotter with a DataProcessor instance and output directory.
 
         :param processor: Instance of DataProcessor containing processed data.
+        :param plot_dir: Path to the directory where plots will be saved.
         """
         self.processor = processor
+        self.plot_dir = plot_dir or Path('plot')  # Default to 'plot' directory
+        self.plot_dir.mkdir(parents=True, exist_ok=True)  # Create directory if it doesn't exist
 
     def set_processor(self, processor: 'DataProcessor') -> None:
         """
@@ -30,7 +34,7 @@ class Plotter:
 
     def plot_data(self) -> None:
         """
-        Plot the processed offline and online data with optimized text placement.
+        Plot the processed offline and online data and save the figure to the plot directory.
         """
         if self.processor is None:
             logger.error("DataProcessor is not set. Use set_processor() before plotting.")
@@ -189,7 +193,16 @@ class Plotter:
 
             # Automatically adjust the layout to avoid overlap
             plt.tight_layout(pad=3)
+
+            # Create a timestamp for unique filenames
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            plot_filename = self.plot_dir / f"main_culture_simulation_{timestamp}.png"
+            plt.savefig(plot_filename, dpi=300)
+            logger.info(f"Main culture simulation plot saved to {plot_filename}")
+
+            # Optionally, display the plot
             plt.show()
+            plt.close(fig)  # Close the figure to free memory
             logger.info("Main culture simulation plots generated successfully.")
         except Exception as e:
             logger.error(f"Error generating main culture simulation plots: {e}")
@@ -197,7 +210,7 @@ class Plotter:
 
     def plot_kla_data(self, df: pd.DataFrame) -> None:
         """
-        Plot KLA data with similar logic to working_test.py's visualize_data.
+        Plot KLA data and save the figure to the plot directory.
 
         :param df: DataFrame containing KLA data.
         """
@@ -220,7 +233,16 @@ class Plotter:
             plt.title('Measurement Data Over Time')
             plt.legend()
             plt.tight_layout()
+
+            # Create a timestamp for unique filenames
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            plot_filename = self.plot_dir / f"kla_data_plot_{timestamp}.png"
+            plt.savefig(plot_filename, dpi=300)
+            logger.info(f"KLA data plot saved to {plot_filename}")
+
+            # Optionally, display the plot
             plt.show()
+            plt.close()
             logger.info("KLA data plots generated successfully.")
         except Exception as e:
             logger.error(f"Error generating KLA data plots: {e}")

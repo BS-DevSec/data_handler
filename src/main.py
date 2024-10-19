@@ -1,3 +1,4 @@
+# main.py
 import logging
 from pathlib import Path
 from typing import Optional
@@ -19,16 +20,18 @@ logger = logging.getLogger(__name__)
 class MainApp:
     """Main application class to orchestrate data loading, processing, and plotting."""
 
-    def __init__(self, offline_file: Path, online_file: Path):
+    def __init__(self, offline_file: Path, online_file: Path, plot_dir: Path):
         """
         Initialize the MainApp with paths to offline and online data files.
 
         :param offline_file: Path to the offline data file.
         :param online_file: Path to the online data file.
+        :param plot_dir: Path to the directory where plots will be saved.
         """
         self.data_loader = DataLoader(str(offline_file), str(online_file))
         self.data_processor: Optional[DataProcessor] = None
         self.plotter: Optional[Plotter] = None
+        self.plot_dir = plot_dir
 
     def run(self) -> None:
         """
@@ -53,8 +56,8 @@ class MainApp:
             self.data_processor.calculate_feed_time()
             self.data_processor.get_valid_masks()
 
-            # Step 3: Initialize plotter and generate plots
-            self.plotter = Plotter(processor=self.data_processor)
+            # Step 3: Initialize plotter with plot_dir and generate plots
+            self.plotter = Plotter(processor=self.data_processor, plot_dir=self.plot_dir)
             self.plotter.plot_data()
 
             logger.info("Main workflow completed successfully.")
@@ -77,8 +80,8 @@ class MainApp:
             kla_processor = DataProcessor(offline_data=None, online_data=None)
             kla_data = kla_processor.preprocess_kla_data(kla_data)
 
-            # Step 3: Initialize plotter and plot KLA data
-            kla_plotter = Plotter()
+            # Step 3: Initialize plotter with plot_dir and plot KLA data
+            kla_plotter = Plotter(plot_dir=self.plot_dir)
             kla_plotter.plot_kla_data(kla_data)
 
             logger.info("KLA workflow completed successfully.")
@@ -95,14 +98,21 @@ def main():
     online_file_path = project_root / 'data' / 'hk18' / 'onlindata_HK_453.txt'
     kla_file_path = project_root / 'data' / 'data(kla)' / 'Daten(klA)400rpm 3L.txt'
 
-    # Check if the files exist before proceeding
+    # Define the plot directory relative to the project root
+    plot_dir_path = project_root / 'plots'
+
+    # Check if the data files exist before proceeding
     for file_path in [offline_file_path, online_file_path, kla_file_path]:
         if not file_path.is_file():
             logger.error(f"Required file not found: {file_path}")
             return  # Exit the program if any file is missing
 
     # Initialize and run the main application
-    app = MainApp(offline_file=offline_file_path, online_file=online_file_path)
+    app = MainApp(
+        offline_file=offline_file_path,
+        online_file=online_file_path,
+        plot_dir=plot_dir_path
+    )
     app.run()
     app.run_kla_workflow(kla_file=kla_file_path)
 
