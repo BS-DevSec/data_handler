@@ -139,7 +139,7 @@ def main():
     kla_dir_path = project_root / data_loader_config.get('kla_dir', 'data/data(kla)/')
 
     # Define the plot directory relative to the project root
-    plot_dir_path = project_root / config.get('plotter', 'plot_dir', 'plot')
+    plot_dir_path = project_root / config.get('plotter', 'plot_dir', 'plots')
 
     # Check if the main data files exist before proceeding
     for file_path in [offline_file_path, online_file_path]:
