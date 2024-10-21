@@ -42,4 +42,4 @@ def add_src_to_sys_path():
     if str(src_path) not in sys.path:
         sys.path.insert(0, str(src_path))
     # Optional: Uncomment the next line to debug sys.path during testing
-    # print("sys.path:", sys.path)
+    print("sys.path:", sys.path)

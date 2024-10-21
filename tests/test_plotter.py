@@ -4,7 +4,6 @@ import pytest
 from plotter import Plotter
 import numpy as np
 import matplotlib.axes
-from datetime import date
 
 
 @pytest.fixture
