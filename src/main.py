@@ -2,7 +2,7 @@
 import logging
 from pathlib import Path
 from typing import Optional, Any, Dict
-import glob
+import os
 
 from config_loader import ConfigLoader
 from data_loader import DataLoader
@@ -19,14 +19,20 @@ def setup_logging(logging_config: Dict[str, Any]) -> None:
     level_str = logging_config.get('level', 'INFO').upper()
     level = getattr(logging, level_str, logging.INFO)
     format_str = logging_config.get('format', '%(asctime)s [%(levelname)s] %(name)s: %(message)s')
+
     handlers = []
     for handler in logging_config.get('handlers', []):
         if handler.get('type') == 'stream':
             handlers.append(logging.StreamHandler())
         elif handler.get('type') == 'file':
             filename = handler.get('filename', 'application.log')
+
+            # Ensure the directory for the log file exists
+            log_dir = os.path.dirname(filename)
+            if log_dir and not os.path.exists(log_dir):
+                os.makedirs(log_dir)
+
             handlers.append(logging.FileHandler(filename))
-        # Add more handler types if needed
 
     logging.basicConfig(
         level=level,

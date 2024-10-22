@@ -28,6 +28,29 @@ This project is designed to load, process, and visualize offline, online, and KL
    ```bash
    python setup.py install
    ```
+4. Automated installing process
+ - Setup Virtual Environment and Install Dependencies
+
+   This project uses a virtual environment for managing dependencies. You can automatically set up a virtual environment and install all the necessary dependencies by using the `setup_and_run.py` script.
+
+   #### Steps:
+   1. Ensure that Python is installed on your machine.
+   2. Run the following command to execute the script:
+
+      - **On Windows**:
+        ```bash
+        python setup_and_run.py
+        ```
+
+      - **On Linux/Mac**:
+        ```bash
+        python3 setup_and_run.py
+        ```
+
+   The script will:
+      - Create a virtual environment (if not already created).
+      - Install all dependencies from `requirements.txt`.
+      - Run the main Python application located at `src/main.py`.
 
 ## Project Structure
 
@@ -47,9 +70,11 @@ data_handler/
 │   └── main.py                   # Main entry point for running the workflow
 ├── tests/                        # Unit tests for all components
 ├── tools/                        # Additional tools (like Excel to TXT converter)
+│   └── excel_converter.py        # Excel converter tool
 ├── config.yaml                   # Configuration file for setting up file paths and processing options
 ├── requirements.txt              # List of dependencies
-└── setup.py                      # Setup script for packaging the project
+├── setup.py                      # Setup script for packaging the project
+└── setup_and_run.py              # Script to automatically set up and run the app
 ```
 
 ## Usage

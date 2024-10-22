@@ -97,3 +97,102 @@
 2024-10-21 11:42:55,230 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_600rpm 6L_20241021_114254.png
 2024-10-21 11:42:56,472 [INFO] plotter: KLA data plots generated successfully.
 2024-10-21 11:42:56,473 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)600rpm 6L.txt
+2024-10-22 07:10:43,014 [INFO] __main__: Starting main workflow.
+2024-10-22 07:10:43,014 [INFO] data_loader: Loading offline data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\hk18\offlindata_HK_45.txt
+2024-10-22 07:10:43,026 [INFO] data_loader: Offline data loaded successfully.
+2024-10-22 07:10:43,026 [INFO] data_loader: Loading online data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\hk18\onlindata_HK_453.txt
+2024-10-22 07:10:43,191 [INFO] data_loader: Online data loaded successfully.
+2024-10-22 07:10:43,192 [INFO] data_loader: Processing 'Zeit' column in online data.
+2024-10-22 07:10:43,252 [INFO] data_loader: 'Zeit' column processed successfully.
+2024-10-22 07:10:43,252 [INFO] data_loader: Converting columns ['spH', 'spO2', 'NStirrer', 'sTR', 'sCO2', 'sO2', 'FAirIn', 'sVR', 'FGlucose'] to numeric in online data.
+2024-10-22 07:10:43,252 [INFO] data_loader: Column 'spH' converted to numeric.
+2024-10-22 07:10:43,252 [INFO] data_loader: Column 'spO2' converted to numeric.
+2024-10-22 07:10:43,253 [INFO] data_loader: Column 'NStirrer' converted to numeric.
+2024-10-22 07:10:43,253 [INFO] data_loader: Column 'sTR' converted to numeric.
+2024-10-22 07:10:43,253 [INFO] data_loader: Column 'sCO2' converted to numeric.
+2024-10-22 07:10:43,254 [INFO] data_loader: Column 'sO2' converted to numeric.
+2024-10-22 07:10:43,254 [INFO] data_loader: Column 'FAirIn' converted to numeric.
+2024-10-22 07:10:43,254 [INFO] data_loader: Column 'sVR' converted to numeric.
+2024-10-22 07:10:43,255 [INFO] data_loader: Column 'FGlucose' converted to numeric.
+2024-10-22 07:10:43,255 [INFO] data_processor: Extracting and converting columns from offline data.
+2024-10-22 07:10:43,255 [INFO] data_processor: Offline columns extracted and converted successfully.
+2024-10-22 07:10:43,255 [INFO] data_processor: Calculating feed time for glucose feeds.
+2024-10-22 07:10:43,259 [INFO] data_processor: Feed time calculated successfully.
+2024-10-22 07:10:43,259 [INFO] data_processor: Creating valid masks for online data.
+2024-10-22 07:10:43,259 [INFO] data_processor: Valid masks created successfully.
+2024-10-22 07:10:43,259 [INFO] plotter: Generating main culture simulation plots.
+2024-10-22 07:10:44,785 [INFO] plotter: Main culture simulation plot saved to ..\plots\main_culture_simulation_20241022_071043.png
+2024-10-22 07:10:49,036 [INFO] plotter: Main culture simulation plots generated successfully.
+2024-10-22 07:10:49,036 [INFO] __main__: Main workflow completed successfully.
+2024-10-22 07:10:49,037 [INFO] __main__: Starting KLA workflow for file: Daten(klA)400rpm 3L.txt
+2024-10-22 07:10:49,037 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)400rpm 3L.txt
+2024-10-22 07:10:49,037 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)400rpm 3L.txt
+2024-10-22 07:10:49,038 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:49,041 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:49,041 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:49,043 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:49,045 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:49,046 [INFO] plotter: Generating KLA data plots for Daten(klA)400rpm 3L.
+2024-10-22 07:10:49,788 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_400rpm 3L_20241022_071049.png
+2024-10-22 07:10:51,830 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:10:51,830 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)400rpm 3L.txt
+2024-10-22 07:10:51,830 [INFO] __main__: Starting KLA workflow for file: Daten(klA)400rpm 6L.txt
+2024-10-22 07:10:51,830 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)400rpm 6L.txt
+2024-10-22 07:10:51,830 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)400rpm 6L.txt
+2024-10-22 07:10:51,830 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:51,832 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:51,832 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:51,833 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:51,835 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:51,835 [INFO] plotter: Generating KLA data plots for Daten(klA)400rpm 6L.
+2024-10-22 07:10:52,502 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_400rpm 6L_20241022_071052.png
+2024-10-22 07:10:53,930 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:10:53,930 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)400rpm 6L.txt
+2024-10-22 07:10:53,930 [INFO] __main__: Starting KLA workflow for file: Daten(klA)500rpm 3L.txt
+2024-10-22 07:10:53,930 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)500rpm 3L.txt
+2024-10-22 07:10:53,930 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)500rpm 3L.txt
+2024-10-22 07:10:53,931 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:53,932 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:53,933 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:53,934 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:53,935 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:53,935 [INFO] plotter: Generating KLA data plots for Daten(klA)500rpm 3L.
+2024-10-22 07:10:54,577 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_500rpm 3L_20241022_071054.png
+2024-10-22 07:10:55,888 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:10:55,888 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)500rpm 3L.txt
+2024-10-22 07:10:55,888 [INFO] __main__: Starting KLA workflow for file: Daten(klA)500rpm 6L.txt
+2024-10-22 07:10:55,888 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)500rpm 6L.txt
+2024-10-22 07:10:55,888 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)500rpm 6L.txt
+2024-10-22 07:10:55,888 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:55,890 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:55,890 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:55,892 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:55,893 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:55,893 [INFO] plotter: Generating KLA data plots for Daten(klA)500rpm 6L.
+2024-10-22 07:10:56,501 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_500rpm 6L_20241022_071056.png
+2024-10-22 07:10:58,063 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:10:58,063 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)500rpm 6L.txt
+2024-10-22 07:10:58,063 [INFO] __main__: Starting KLA workflow for file: Daten(klA)600rpm 3L.txt
+2024-10-22 07:10:58,063 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)600rpm 3L.txt
+2024-10-22 07:10:58,063 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)600rpm 3L.txt
+2024-10-22 07:10:58,063 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:58,065 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:58,065 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:58,067 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:58,068 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:58,068 [INFO] plotter: Generating KLA data plots for Daten(klA)600rpm 3L.
+2024-10-22 07:10:58,626 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_600rpm 3L_20241022_071058.png
+2024-10-22 07:10:59,842 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:10:59,842 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)600rpm 3L.txt
+2024-10-22 07:10:59,842 [INFO] __main__: Starting KLA workflow for file: Daten(klA)600rpm 6L.txt
+2024-10-22 07:10:59,843 [INFO] data_loader: Loading KLA data from C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)600rpm 6L.txt
+2024-10-22 07:10:59,843 [INFO] data_loader: Finding data start in file: C:\Users\bsprinzl\Documents\GitHub\data_handler\data\data(kla)\Daten(klA)600rpm 6L.txt
+2024-10-22 07:10:59,843 [INFO] data_loader: Data starts at line 9
+2024-10-22 07:10:59,845 [INFO] data_loader: KLA data loaded successfully.
+2024-10-22 07:10:59,845 [INFO] data_processor: Preprocessing KLA data.
+2024-10-22 07:10:59,846 [WARNING] data_processor: 1 rows have invalid timestamps.
+2024-10-22 07:10:59,848 [INFO] data_processor: KLA data preprocessed successfully.
+2024-10-22 07:10:59,848 [INFO] plotter: Generating KLA data plots for Daten(klA)600rpm 6L.
+2024-10-22 07:11:00,457 [INFO] plotter: KLA data plot saved to ..\plots\kla_data_plot_600rpm 6L_20241022_071100.png
+2024-10-22 07:11:01,677 [INFO] plotter: KLA data plots generated successfully.
+2024-10-22 07:11:01,677 [INFO] __main__: KLA workflow completed successfully for file: Daten(klA)600rpm 6L.txt
